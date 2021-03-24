@@ -41,6 +41,10 @@ build: validate-go-version clean $(BINARY)
 $(BINARY):
 	GO111MODULE=on CGO_ENABLED=0 $(GO) build -a -installsuffix cgo -ldflags="-X main.VERSION=${VERSION}" -o $@ github.com/oauth2-proxy/oauth2-proxy/v7
 
+.PHONY: docker-preet
+docker-preet:
+	$(DOCKER_BUILD) -f Dockerfile -t $(REGISTRY)/oauth2-proxy:${VERSION} .
+
 .PHONY: docker
 docker:
 	$(DOCKER_BUILD) -f Dockerfile -t $(REGISTRY)/oauth2-proxy:latest .
