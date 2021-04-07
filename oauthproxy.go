@@ -839,6 +839,9 @@ func (p *OAuthProxy) OAuthCallback(rw http.ResponseWriter, req *http.Request) {
 	if err != nil {
 		logger.Errorf("Error with authorization: %v", err)
 	}
+	logger.Println("Session email - ", session.Email)
+	logger.Println("Session email validation - ", p.Validator(session.Email))
+	logger.Println("Is authorised - ", authorized)
 	if p.Validator(session.Email) && authorized {
 		logger.PrintAuthf(session.Email, req, logger.AuthSuccess, "Authenticated via OAuth2: %s", session)
 		err := p.SaveSession(rw, req, session)
